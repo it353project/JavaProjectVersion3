@@ -5,6 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{searchController.populateMostViewed()}"/>
+        <f:event type="preRenderView" listener="#{searchController.populateMostDownloaded()}"/>
+    </f:metadata>
     <h:head>
         <title>Dashboard</title>
     </h:head>
@@ -19,24 +23,12 @@
                 <h:form>
                     <p:tabView>
                         <p:tab title="Most Viewed Thesis">
-                            <p:dataTable id="mostViewed" value="#{dashboardController.findMostViewed}" var="aRow">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Times Viewed"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.timesViewed}"/>
-                                </p:column>
+                            <p:dataTable id="mostViewed" value="#{searchController.mostViewed}" var="aRow">
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Thesis ID"/>
                                     </f:facet>
                                     <h:outputText value="#{aRow.thesisID}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Author Name"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.authorName}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
@@ -46,30 +38,25 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Upload Date"/>
+                                        <h:outputText value="Author Name"/>
                                     </f:facet>
-                                    <h:outputText value="#{aRow.uploadDate}"/>
+                                    <h:outputText value="#{aRow.authorName}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Details"/>
-                                    </f:facet>                                   
+                                        <h:outputText value="No. Times Viewed"/>
+                                    </f:facet>
+                                    <h:outputText value="#{aRow.noTimesView}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
                         <p:tab title="Most Downloaded Thesis">
-                            <p:dataTable id="mostDownloaded" value="#{searchController.searchList}" var="aRow">
+                            <p:dataTable id="mostDownloaded" value="#{searchController.mostDownloaded}" var="aRow">
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Thesis ID"/>
                                     </f:facet>
                                     <h:outputText value="#{aRow.thesisID}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Author Name"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.authorName}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
@@ -79,47 +66,15 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Upload Date"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.uploadDate}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Details"/>
-                                    </f:facet>                                   
-                                </p:column>
-                            </p:dataTable>
-                        </p:tab>
-                        <p:tab title="Date Range">
-                            <p:dataTable id="dateRange" value="#{searchController.searchList}" var="aRow">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Thesis ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.thesisID}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
                                         <h:outputText value="Author Name"/>
                                     </f:facet>
                                     <h:outputText value="#{aRow.authorName}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Thesis Name"/>
+                                        <h:outputText value="No. Times Downloaded"/>
                                     </f:facet>
-                                    <h:outputText value="#{aRow.thesisName}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Upload Date"/>
-                                    </f:facet>
-                                    <h:outputText value="#{aRow.uploadDate}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Details"/>
-                                    </f:facet>                                   
+                                    <h:outputText value="#{aRow.noTimesDown}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:tab>

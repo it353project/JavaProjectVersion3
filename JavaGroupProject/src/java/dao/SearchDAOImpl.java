@@ -771,4 +771,115 @@ public class SearchDAOImpl implements SearchDAO {
         /* Return the search results */
         return searchResults;
     }
+    
+    public ArrayList populateMostViewed(){
+        ArrayList mostViewed = new ArrayList();
+        String baseSelect = "SELECT"
+                + " IT353.ACCOUNT.FIRSTNAME || ' ' || IT353.ACCOUNT.LASTNAME AS AUTHORNAME,"
+                + " IT353.THESIS.THESISID, "
+                + " IT353.THESIS.THESISNAME, "
+                + " IT353.THESIS.NOTIMESVIEWED ";
+        String fromClause = "FROM IT353.ACCOUNT ";
+        String joinClause = "JOIN IT353.THESIS ON IT353.THESIS.ACCOUNTID = IT353.ACCOUNT.ACCOUNTID ";
+        String orderByClause = "ORDER BY IT353.THESIS.NOTIMESVIEWED";
+        String query = baseSelect + fromClause + orderByClause;
+        
+        mostViewed = runReportView(query);
+        
+        return mostViewed;
+    }
+    
+    public ArrayList populateMostDownloaded(){
+        ArrayList mostDownloaded = new ArrayList();
+        
+                String baseSelect = "SELECT"
+                + " IT353.ACCOUNT.FIRSTNAME || ' ' || IT353.ACCOUNT.LASTNAME AS AUTHORNAME,"
+                + " IT353.THESIS.THESISID, "
+                + " IT353.THESIS.THESISNAME, "
+                + " IT353.THESIS.NOTIMESDOWN ";
+        String fromClause = "FROM IT353.ACCOUNT ";
+        String joinClause = "JOIN IT353.THESIS ON IT353.THESIS.ACCOUNTID = IT353.ACCOUNT.ACCOUNTID ";
+        String orderByClause = "ORDER BY IT353.THESIS.NOTIMESDOWN";
+        String query = baseSelect + fromClause + orderByClause;
+        
+        mostDownloaded = runReportDown(query);
+        
+        return mostDownloaded;
+    }
+    
+    private ArrayList runReportView(String query){
+        ArrayList report = new ArrayList();
+        
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        
+        try {         
+            String myDB = "jdbc:derby://localhost:1527/IT353";  
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            Statement stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(query);
+            
+            ViewBean aView;
+            
+            while (rs.next()) {
+                aView = new ViewBean();    
+                aView.setThesisID(Integer.parseInt(rs.getString("THESISID")));
+                aView.setThesisName(rs.getString("THESISNAME"));
+                aView.setAuthorName(rs.getString("AUTHORNAME"));
+                aView.setNoTimesView(Integer.parseInt(rs.getString("NOTIMESVIEWED")));
+                report.add(aView);
+            }
+            
+            rs.close();
+            stmt.close();
+            DBConn.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return report;
+    }
+    
+    private ArrayList runReportDown(String query){
+        ArrayList report = new ArrayList();
+        
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        
+        try {         
+            String myDB = "jdbc:derby://localhost:1527/IT353";  
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            Statement stmt = DBConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(query);
+            
+            ViewBean aView;
+            
+            while (rs.next()) {
+                aView = new ViewBean();    
+                aView.setThesisID(Integer.parseInt(rs.getString("THESISID")));
+                aView.setThesisName(rs.getString("THESISNAME"));
+                aView.setAuthorName(rs.getString("AUTHORNAME"));
+                aView.setNoTimesView(Integer.parseInt(rs.getString("NOTIMESDOWN")));
+                report.add(aView);
+            }
+            
+            rs.close();
+            stmt.close();
+            DBConn.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return report;
+    }
 }

@@ -37,6 +37,8 @@ public class SearchController {
     private Date startDate;
     private Date endDate;
     private List searchList;
+    private List mostViewed;
+    private List mostDownloaded;
     private StreamedContent file;
     
     public SearchController() {
@@ -92,7 +94,8 @@ public class SearchController {
         
         return file;
     }
-        public StreamedContent getFile() {
+    
+    public StreamedContent getFile() {
         return file;
     }
  
@@ -192,5 +195,41 @@ public class SearchController {
         return "adminSearchResult.xhtml";
         }
         return null;
+    }
+
+    /**
+     * @return the mostViewed
+     */
+    public List getMostViewed() {
+        return mostViewed;
+    }
+
+    /**
+     * @param mostViewed the mostViewed to set
+     */
+    public void setMostViewed(List mostViewed) {
+        this.mostViewed = mostViewed;
+    }
+
+    /**
+     * @return the mostDownloaded
+     */
+    public List getMostDownloaded() {
+        return mostDownloaded;
+    }
+
+    /**
+     * @param mostDownloaded the mostDownloaded to set
+     */
+    public void setMostDownloaded(List mostDownloaded) {
+        this.mostDownloaded = mostDownloaded;
+    }
+    
+    public void populateMostViewed(){
+        SearchDAO aSearchDAO = new SearchDAOImpl();
+    }
+    
+    public void populateMostDownloaded(){
+        SearchDAO aSearchDAO = new SearchDAOImpl();
     }
 }

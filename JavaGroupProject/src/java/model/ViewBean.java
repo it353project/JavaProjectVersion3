@@ -24,6 +24,8 @@ public class ViewBean {
     private String liveLink;
     private String uploadDate;
     private String highlightStatus;
+    private int noTimesDown;
+    private int noTimesView;
 
     /**
      * @return the thesisID
@@ -195,6 +197,34 @@ public String getKeywordString() {
      */
     public void setHighlightStatus(String highlightStatus) {
         this.highlightStatus = highlightStatus;
+    }
+
+    /**
+     * @return the noTimesDown
+     */
+    public int getNoTimesDown() {
+        return noTimesDown;
+    }
+
+    /**
+     * @param noTimesDown the noTimesDown to set
+     */
+    public void setNoTimesDown(int noTimesDown) {
+        this.noTimesDown = noTimesDown;
+    }
+
+    /**
+     * @return the noTimesView
+     */
+    public int getNoTimesView() {
+        return noTimesView;
+    }
+
+    /**
+     * @param noTimesView the noTimesView to set
+     */
+    public void setNoTimesView(int noTimesView) {
+        this.noTimesView = noTimesView;
     }
 
     

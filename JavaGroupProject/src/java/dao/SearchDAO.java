@@ -28,4 +28,6 @@ public interface SearchDAO {
     public int performMark(int thesisID);
     public int performUnmark(int thesisID);
     public ArrayList highlightSearch();
+    public ArrayList populateMostViewed();
+    public ArrayList populateMostDownloaded();
 }
