@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Master Template</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="masterTemplate.xhtml" >
+            <div id="top">
+                <ui:define name="top">
+                    <center style="font-size: 300%;">Illinois State University - Thesis Tracker</center>
+                </ui:define>
+            </div>
+
+            <div id="content" class="center_content">
+                <ui:define name="content">
+                    <div id="login" class="coreDiv">
+                        <h:form>
+                            <center><p:panelGrid columns="2">
+
+                                <f:facet name="details">
+                                    <h:outputText value="Details" />
+                                </f:facet>
+
+                                Author Name: <h:outputText id="authorName" escape="false" value="#{searchController.finalSelection.authorName}" />
+                                Thesis Name: <h:outputText id="thesisName" escape="false" value="#{searchController.finalSelection.thesisName}" />
+                                Course Number: <h:outputText id="courseNo" escape="false" value="#{searchController.finalSelection.courseNo}" />
+                                Keyword(s): <h:outputText id="keywordString" escape="false" value="#{searchController.finalSelection.keywordString}" />
+                                Abstract: <h:outputText id="abstractCLOB" escape="false" value="#{searchController.finalSelection.abstractCLOB}" />
+                                Attachment Link: <h:outputText id="attachmentLink" escape="false" value="#{searchController.finalSelection.attachmentLink}" />
+                                Screencast Link: <a href="#{searchController.finalSelection.screencastLink}"> <h:outputText id="screencastLink" escape="false" value="#{searchController.finalSelection.screencastLink}" /></a>
+                                Live Link: <a href="#{searchController.finalSelection.screencastLink}"> <h:outputText id="liveLink" escape="false" value="#{searchController.finalSelection.liveLink}" /></a>
+                                Upload Date: <h:outputText id="uploadDate" escape="false" value="#{searchController.finalSelection.uploadDate}" />
+
+                                
+                                </p:panelGrid> 
+                                
+                            <p:commandButton id="showSimilar" value="Show Similar" action="#{searchController.showSimilar()}" />   
+                            <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
+                                <p:fileDownload value="#{searchController.downloadThesis()}" />
+                            </p:commandButton></center>
+                        </h:form>
+                    </div>
+                </ui:define>
+            </div>
+
+
+        </ui:composition>
+    </h:body>
+
+</html>

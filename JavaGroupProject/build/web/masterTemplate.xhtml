@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Master Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <center style="font-size: 300%;">Illinois State University - Thesis Tracker</center>
+            </ui:insert>
+
+            <ui:insert name="top_link">
+                <div align="right">
+
+                    <c:if test="#{loginController.loggedIn=='false'}">
+
+                        <h:panelGroup layout="block">
+                            <h:form>
+                                <h:commandLink value="Log In" action="login.xhtml"/> |
+                                <h:commandLink value="Create Account" action="signUpPage1.xhtml"/>
+                            </h:form>
+                        </h:panelGroup>
+
+                    </c:if>
+
+                    <c:if test="#{loginController.loggedIn=='true'}">
+
+                        <h:panelGroup layout="block">
+                            <h:form>
+                                <h:commandLink value="Home" action="studentLandingPage.xhtml"/> |
+                                <h:commandLink value="Sign Out" action="#{loginController.logout()}"/> 
+                            </h:form>
+                        </h:panelGroup>
+                    </c:if>
+
+
+                </div>
+            </ui:insert>
+
+        </div>
+
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom"><left>Copyright 2015</left></ui:insert>
+        </div>
+
+        <c:if test="#{loginController.loggedIn=='false'}">
+
+            <p:dock position="bottom">
+                <p:menuitem value="Log In" icon="/resources/logIn.png" url="login.xhtml"/>
+                <p:menuitem value="Sign Up" icon="/resources/signUp.png" url="signUpPage1.xhtml"/>
+                <p:menuitem value="Recover Password" icon="/resources/recoverPassword.png" url="lostPassword.xhtml"/>
+                
+            </p:dock>
+
+        </c:if>   
+
+        <c:if test="#{loginController.theAccountType=='student'}">
+
+            <p:dock position="bottom">
+                <p:menuitem value="Home" icon="/resources/home.png" url="studentLandingPage.xhtml"/>
+                <p:menuitem value="Upload Thesis" icon="/resources/uploadThesis.png" url="uploadThesis.xhtml"/>
+                <p:menuitem value="Search For Thesis" icon="/resources/searchForThesis.png" url="searchForm.xhtml"/>
+                <p:menuitem value="Subscriptions" icon="/resources/subscriptions.png" url="subscriptions.xhtml"/>
+            </p:dock>
+
+        </c:if>
+
+
+        <c:if test="#{loginController.theAccountType=='admin'}">
+
+            <p:dock position="bottom">
+                <p:menuitem value="Home" icon="/resources/home.png" url="studentLandingPage.xhtml"/>
+                <p:menuitem value="Upload Thesis" icon="/resources/uploadThesis.png" url="uploadThesis.xhtml"/>
+                <p:menuitem value="Search For Thesis" icon="/resources/searchForThesis.png" url="searchForm.xhtml"/>
+                <p:menuitem value="Dashboard" icon="/resources/dashboard.png" url="dashboard.xhtml"/>
+                <p:menuitem value="Subscriptions" icon="/resources/subscriptions.png" url="subscriptions.xhtml"/>
+            </p:dock>
+
+        </c:if>
+
+
+
+
+    </h:body>
+
+</html>
